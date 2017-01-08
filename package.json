@@ -1,0 +1,22 @@
+{
+  "name": "node-small-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "crawler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qianlongo/node-small-crawler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qianlongo/node-small-crawler/issues"
+  },
+  "homepage": "https://github.com/qianlongo/node-small-crawler#readme",
+  "devDependencies": {
+    "cheerio": "^0.22.0"
+  }
+}
