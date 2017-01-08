@@ -1,5 +1,12 @@
 # node-small-crawler
 
+> this is a project that can download images from zhihu
+
+# first
+
+> ensure you have installed nodejs
+
+
 # install
 
 ```
@@ -9,7 +16,7 @@ npm install
 
 # run
 
-> add url to crawler.js later that you want to get images from it
+> put url after crawler.js  that you want to get images from it
 
 ```
 
