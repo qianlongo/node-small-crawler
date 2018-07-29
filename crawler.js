@@ -1,67 +1,104 @@
-var https = require('https'),
-    request = require('request'),
-    cheerio = require('cheerio'),
-    path = require('path'),
-    fs = require('fs'),
-    // ,url = 'https://www.zhihu.com/question/35846840'; 汉服
-    // ,url = 'https://www.zhihu.com/question/37709992'; // 长得好看
-    // ,url = 'https://www.zhihu.com/question/33644719'; // 校花
-    // ,url = 'https://www.zhihu.com/question/34243513'; // 你见过最漂亮的女生长什么样？
-    // ,url = 'https://www.zhihu.com/question/34078228'; // 发一张你认为很漂亮的美女照片
-    defaultUrl = 'https://www.zhihu.com/question/34078228'; // 发一张你认为很漂亮的美女照片
-    url = process.argv[2];
+let path = require('path')
+let fs = require('fs')
+let request = require('request')
 
-let app = {
-  init (url) {
-    this.filePath = this.generateFilePath(this.parseFileName(url));
-    this.getAllHtml(url, this.filterHtml);
-  },
-  getAllHtml (url, callback) {
-    let sHtml = '',
-        _this = this;
-    https.get(url, (res) => {
-      res.on('data', (data) => {
-        sHtml += data;
-      });
-      res.on('end', () => {
-        callback.bind(_this, sHtml)();
-      })
-    }).on('error', (err) => {
-      console.log(err);
-    });
-  },
-  filterHtml (sHtml, filePath) {
-    let $ = cheerio.load(sHtml),
-        $Imgs = $('noscript img'),
-        imgData = [],
-        _this = this;
-        
-      $Imgs.each((i, e) => {
-        let imgUrl = $(e).attr('src');
-
-        imgData.push(imgUrl);
-        _this.downloadImg(imgUrl, _this.filePath, function (err) {
-          console.log(imgUrl + 'has be down');
-        });
-      });
-      console.log(imgData);
-  },
-  parseFileName (fileName) {
-    return path.basename(fileName);
-  },
-  generateFilePath (path) {
-    if (fs.existsSync(path)) {
-      console.log(path + '目录已经存在');
-    } else {
-      fs.mkdirSync(path);
-      console.log(path + '目录创建成功');
-    }
-    return path;
-  },
-  downloadImg (imgUrl, filePath, callback) {
-    let fileName = this.parseFileName(imgUrl);
-    request(imgUrl).pipe(fs.createWriteStream('./' + filePath + '/'+fileName)).on('close', callback && callback);
+class Crawler {
+  constructor ({ id = '49364343', dir } = payload) {
+    this.offset = 0
+    this.id = id
+    this.filePath = `${dir}/${id}`
+    this.mkdirSync()
+    this.downloadImg()
   }
-};
-app.init(url || defaultUrl);
 
+  downloadImg () {
+    let { offset, id } = this
+
+    console.log(offset)
+    this.getPicsUrl({ offset, id })
+      .then((picsUrl) => {
+        console.log('========')
+        console.log(picsUrl)
+        this.saveImg(picsUrl)
+
+        setTimeout(() => {
+          console.log('休息15秒钟')
+          this.offset += 1
+          this.downloadImg()
+        }, 15000)
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
+
+  saveImg (picsUrl = [], cb) {
+    picsUrl.forEach((picUrl) => {
+      let fileName = path.basename(picUrl)
+
+      request(picUrl)
+        .pipe(fs.createWriteStream(`${this.filePath}/${fileName}`))
+        .on('close', () => {
+          console.log(`${picUrl} 已经下载完成`)
+        })
+    })
+  }
+
+  mkdirSync () {
+    let filePath = path.resolve(this.filePath)
+
+    if (fs.existsSync(filePath)) {
+      console.log(filePath + '目录已经存在')
+    } else {
+      fs.mkdirSync(filePath);
+      console.log(filePath + '目录创建成功')
+    }
+  }
+
+  getPicsUrl ({ id, offset = 1, limit = 100} = {}) {
+    return (
+      new Promise((resolve, reject) => {
+        request({
+          uri: `https://www.zhihu.com/api/v4/questions/${id}/answers?include=data%5B%2A%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Cis_sticky%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Crelevant_info%2Cquestion%2Cexcerpt%2Crelationship.is_authorized%2Cis_author%2Cvoting%2Cis_thanked%2Cis_nothelp%3Bdata%5B%2A%5D.mark_infos%5B%2A%5D.url%3Bdata%5B%2A%5D.author.follower_count%2Cbadge%5B%3F%28type%3Dbest_answerer%29%5D.topics&sort_by=default&limit=${limit}&offset=${offset}`,
+          json: true
+        }, (error, response, { data } = body) => {
+          if (error) {
+            reject(error)
+          }
+
+          if (!error && data) {
+            resolve(this.filterPicsUrl(this.flattenContent(data)))
+          }
+        })
+      })
+    )
+  }
+
+  flattenContent (data) {
+    return Array.isArray(data) && data.reduce((content, it = {}) => content + it.content, '') || ''
+  }
+
+  filterPicsUrl (imgStr) {
+    let imgRe = /<img.*?(?:>|\/>)/gi
+    let dataOriginRe = /data-original=[\'\"]?([^\'\"]*)[\'\"]?/i
+    let matchImgs = imgStr.match(imgRe)
+    let result = []
+
+    if (matchImgs) {
+      try {
+        matchImgs.forEach((img) => {
+          let dataOriginVal = img.match(dataOriginRe)
+  
+          if (dataOriginVal && dataOriginVal[1]) {
+            result.push(dataOriginVal[1])
+          }
+        })
+      } catch (error) {}
+    }
+
+    return Array.from(new Set(result))
+  }  
+}
+
+module.exports = (payload = {}) => {
+  return new Crawler(payload)
+}
