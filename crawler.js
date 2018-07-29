@@ -8,7 +8,7 @@ var https = require('https'),
     // ,url = 'https://www.zhihu.com/question/33644719'; // 校花
     // ,url = 'https://www.zhihu.com/question/34243513'; // 你见过最漂亮的女生长什么样？
     // ,url = 'https://www.zhihu.com/question/34078228'; // 发一张你认为很漂亮的美女照片
-    defaultUrl = 'https://www.zhihu.com/question/34243513'; // 发一张你认为很漂亮的美女照片
+    defaultUrl = 'https://www.zhihu.com/question/34078228'; // 发一张你认为很漂亮的美女照片
     url = process.argv[2];
 
 let app = {
@@ -32,7 +32,7 @@ let app = {
   },
   filterHtml (sHtml, filePath) {
     let $ = cheerio.load(sHtml),
-        $Imgs = $('img'),
+        $Imgs = $('noscript img'),
         imgData = [],
         _this = this;
         
