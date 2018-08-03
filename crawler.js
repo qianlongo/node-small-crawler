@@ -14,7 +14,6 @@ class Crawler {
   downloadImg () {
     let { offset, id } = this
 
-    console.log(offset)
     this.getPicsUrl({ offset, id })
       .then((picsUrl) => {
         console.log('========')
@@ -22,10 +21,10 @@ class Crawler {
         this.saveImg(picsUrl)
 
         setTimeout(() => {
-          console.log('休息15秒钟')
+          console.log('休息7秒钟')
           this.offset += 1
           this.downloadImg()
-        }, 15000)
+        }, 7000)
       }).catch((error) => {
         console.log(error)
       })
@@ -54,7 +53,7 @@ class Crawler {
     }
   }
 
-  getPicsUrl ({ id, offset = 1, limit = 100} = {}) {
+  getPicsUrl ({ id, offset = 1, limit = 20} = {}) {
     return (
       new Promise((resolve, reject) => {
         request({
