@@ -17,6 +17,7 @@ const ids = [
   28586345,
   29134042
 ]
-const wrapDirName = './imgs'
+console.log(ids)
+const dir = './imgs'
 
-crawler({ dir: wrapDirName, id: '29134042' })
+crawler({ dir, id: '29134042' })
