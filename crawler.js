@@ -16,6 +16,7 @@ class Crawler {
 
     this.init()
   }
+
   async init () {
     if (this.isEnd) {
       console.log('已经全部下载完成')
@@ -34,6 +35,7 @@ class Crawler {
       this.downloaded >= this.imgs.length && this.init()
     })
   }
+
   async getAnswers () {
     let { uri, timeout } = this
     let response = {}
