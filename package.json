@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/qianlongo/node-small-crawler#readme",
   "dependencies": {
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
   }
 }
