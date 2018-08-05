@@ -1,13 +1,13 @@
-# node-small-crawler
+## node-small-crawler
 
-> 一个可以从知乎上下载图片的小工具
+> 一个可以从知乎上下载美女图片的小工具
 
-# 开始前
+## 前置条件 
 
-> 请确认你已经安装了nodejs
+> 请确认你已经安装了nodejs,并且版本在比较高的版本比如8.9.3
 
 
-# clone并且安装依赖
+## clone && 安装依赖
 
 ```
 git clone https://github.com/qianlongo/node-small-crawler.git
@@ -15,7 +15,7 @@ cd node-small-crawler && npm install
 
 ```
 
-# 跑起来
+## 配置
 
 > 打开index.js,你会看到这段代码
 
@@ -28,10 +28,10 @@ require('./crawler')({
 
 ```
 
+## 跑起来
+
 > npm run start, 接下来就可以从控制台看到不断地在下载图片了。
 
 
-
-
-![](http://odssgnnpf.bkt.clouddn.com/aaaa.png)
-![](http://odssgnnpf.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-01-08%2023.06.55.png)
+![](http://odssgnnpf.bkt.clouddn.com/Untitled.gif)
+<!-- ![](http://odssgnnpf.bkt.clouddn.com/WX20180805-124543@2x.png) -->
