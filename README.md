@@ -1,6 +1,8 @@
 ## node-small-crawler
 
 > 一个可以从知乎上下载美女图片的小工具
+可以点击
+[一个前端小白的"爬虫"初试](https://github.com/qianlongo/blog/issues/26)查看实现原理
 
 ## 前置条件 
 
