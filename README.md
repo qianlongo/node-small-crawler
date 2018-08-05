@@ -2,19 +2,20 @@
 
 > 一个可以从知乎上下载图片的小工具
 
-# first
+# 开始前
 
 > 请确认你已经安装了nodejs
 
 
-# install
+# clone并且安装依赖
 
 ```
-npm install
+git clone https://github.com/qianlongo/node-small-crawler.git
+cd node-small-crawler && npm install
 
 ```
 
-# run
+# 跑起来
 
 > 打开index.js,你会看到这段代码
 
@@ -27,7 +28,9 @@ require('./crawler')({
 
 ```
 
-> npm run start
+> npm run start, 接下来就可以从控制台看到不断地在下载图片了。
+
+
 
 
 ![](http://odssgnnpf.bkt.clouddn.com/aaaa.png)
