@@ -1,7 +1,7 @@
 let path = require('path')
 let fs = require('fs')
-const rp = require('request-promise')
-const originUrl = 'https://www.zhihu.com'
+let rp = require('request-promise')
+let originUrl = 'https://www.zhihu.com'
 
 class Crawler {
   constructor (options) {
