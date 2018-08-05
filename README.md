@@ -33,5 +33,5 @@ require('./crawler')({
 > npm run start, 接下来就可以从控制台看到不断地在下载图片了。
 
 
+![](http://odssgnnpf.bkt.clouddn.com/aaaa.png)
 ![](http://odssgnnpf.bkt.clouddn.com/Untitled.gif)
-<!-- ![](http://odssgnnpf.bkt.clouddn.com/WX20180805-124543@2x.png) -->
