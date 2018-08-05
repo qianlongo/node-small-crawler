@@ -17,7 +17,8 @@ const ids = [
   28586345,
   29134042
 ]
-console.log(ids)
 const dir = './imgs'
 
-crawler({ dir, id: '29134042' })
+console.log(ids)
+
+crawler({ dir, questionId: '29134042' })
