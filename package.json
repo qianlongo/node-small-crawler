@@ -2,7 +2,7 @@
   "name": "node-small-crawler",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "crawler.js",
   "scripts": {
     "start": "node index.js",
     "lint": "standard",
