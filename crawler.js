@@ -5,7 +5,7 @@ let originUrl = 'https://www.zhihu.com'
 
 class Crawler {
   constructor (options) {
-    const { dir = './imgs', proxyUrl = originUrl, questionId = '49364343', offset = 0, limit = 100, timeout = 10000 } = options
+    const { dir = './imgs', proxyUrl = originUrl, questionId = '49364343', offset = 0, limit = 10, timeout = 10000 } = options
 
     this.originUrl = originUrl
     this.proxyUrl = proxyUrl
