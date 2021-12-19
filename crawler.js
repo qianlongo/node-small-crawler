@@ -17,7 +17,7 @@ class Crawler {
     this.dir = dir
     this.folderPath = ''
     this.downloaded = 0
-
+    // console.log(this.uri, '--this.uri')
     this.init()
   }
 
@@ -68,7 +68,8 @@ class Crawler {
 
   matchImg (content) {
     let imgs = []
-    let matchImgOriginRe = /<img.*?data-original="(.*?)"/g
+    // disable
+    let matchImgOriginRe = /<img.*?data-original="([^"\?]*?)[?"]/g
 
     content.replace(matchImgOriginRe, ($0, $1) => imgs.push($1))
 
